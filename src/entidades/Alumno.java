@@ -10,34 +10,27 @@ import java.time.LocalDate;
  *
  * @author estef
  */
-public class Alumno {
-    private int id= -1;
+public class Alumno implements Comparable<Alumno>{
+    private int idAlumno= -1;
     private int dni;
     private String nombre;
     private LocalDate fecNac;
     private boolean activo;
 
-    public Alumno(int id, int dni, String nombre, LocalDate fecNac, boolean activo) {
-        this.id=id;
-        this.dni = dni;
-        this.nombre = nombre;
-        this.fecNac = fecNac;
-        this.activo = activo;
-    }
-    
-    public Alumno(int dni, String nombre, LocalDate fecNac, boolean activo) {
+    public Alumno(int idAlumno, int dni, String nombre, LocalDate fecNac, boolean activo) {
+        this.idAlumno=idAlumno;
         this.dni = dni;
         this.nombre = nombre;
         this.fecNac = fecNac;
         this.activo = activo;
     }
 
-    public int getId() {
-        return id;
+    public int getIdAlumno() {
+        return idAlumno;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int idAlumno) {
+        this.idAlumno = idAlumno;
     }
 
     public int getDni() {
@@ -74,9 +67,12 @@ public class Alumno {
 
     @Override
     public String toString() {
-        return id + "-" + nombre;
+        return idAlumno + "-" + nombre;
     }
     
-    
+    @Override
+    public int compareTo(Alumno alu) {
+        return Integer.compare(this.idAlumno, alu.idAlumno);
+    }
     
 }
