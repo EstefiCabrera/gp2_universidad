@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
+import persistencia.AlumnoData;
+import persistencia.miConexion;
 
 /**
  *
@@ -19,12 +21,15 @@ import javax.swing.JOptionPane;
 public class guiAlumnos extends javax.swing.JInternalFrame {
 
     public static TreeSet<Alumno> alumnos = new TreeSet<>();
-    
+    private miConexion conexion;
+    private AlumnoData aluData;
     /**
      * Creates new form guiAlumnos
      */
     public guiAlumnos() {
         initComponents();
+        conexion = new miConexion();
+        aluData = new AlumnoData(conexion);
     }
 
     /**
@@ -42,7 +47,7 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
         jLabelDNI = new javax.swing.JLabel();
         jLabelFecNac = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jfecha = new com.toedter.calendar.JDateChooser();
         btnBuscar = new javax.swing.JButton();
         checkBoxActivo = new java.awt.Checkbox();
         jLabelActivo = new javax.swing.JLabel();
@@ -70,6 +75,7 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
         jLabelFecNac.setText("Fecha Nac: ");
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         checkBoxActivo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         checkBoxActivo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -84,6 +90,7 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(this::btnActualizarActionPerformed);
 
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(this::btnNuevoActionPerformed);
@@ -97,11 +104,14 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
         jLabelNombre1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabelNombre1.setText("Nombre:");
 
+        txtID.setEditable(false);
+        txtID.setFocusable(false);
+
         jDesktopPane3.setLayer(jLabelAlumno, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(jLabelDNI, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(jLabelFecNac, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(txtNombre, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane3.setLayer(jDateChooser1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane3.setLayer(jfecha, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(btnBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(checkBoxActivo, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane3.setLayer(jLabelActivo, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -143,7 +153,7 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jDesktopPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(checkBoxActivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jDesktopPane3Layout.createSequentialGroup()
                                         .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -191,7 +201,7 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addComponent(btnCerrar))
                     .addGroup(jDesktopPane3Layout.createSequentialGroup()
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jfecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18))
         );
@@ -238,7 +248,6 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         try {
-            int idAlumno = Integer.parseInt(txtID.getText());
             String nombre = txtNombre.getText();
             for (int i = 0; i < nombre.length(); i++) {
                 if (Character.isDigit(nombre.charAt(i))) {
@@ -247,12 +256,13 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
             }
             
             int dni = Integer.parseInt(txtDni.getText());
-            LocalDate fecNac = jDateChooser1.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate fecNac = jfecha.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             boolean activo = checkBoxActivo.getState();
             
-            Alumno alumno = new Alumno(idAlumno, dni, nombre, fecNac, activo);
+            Alumno alumno = new Alumno(dni, nombre, fecNac, activo);
             
-            alumnos.add(alumno);
+            aluData.guardarAlumno(alumno);
+            //alumnos.add(alumno);
             
             JOptionPane.showMessageDialog(rootPane, "El alumno se ha cargado correctamente");   
         }catch(NumberFormatException e) {
@@ -287,10 +297,58 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
         txtID.setText("");
         txtNombre.setText("");
         txtDni.setText("");
-        jDateChooser1.setDate(null);
+        jfecha.setDate(null);
         checkBoxActivo.setState(false);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        try{
+            if(txtID.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Debes buscar un alumno para obtener su ID");
+                return;
+            }
+            if(txtDni.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Ingrese el número nuevo de DNI");
+                return;
+            }
+            int idAlumno = Integer.parseInt(txtID.getText().trim());
+            int nuevoDni = Integer.parseInt(txtDni.getText().trim());            
+            Alumno alumnoActualizar = new Alumno();
+            alumnoActualizar.setId(idAlumno);
+            alumnoActualizar.setDni(nuevoDni);
+            aluData.actualizarAlumno(alumnoActualizar);
+                JOptionPane.showMessageDialog(this, "DNI actualizado exitosamente"); 
+        }catch (Exception e){
+                JOptionPane.showMessageDialog(this, "Error al procesar la informacion: "+ e.getMessage());
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+         try{
+            if(txtDni.getText().trim().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Ingrese una numero de DNI");
+                return;
+            }
+            int dni = Integer.parseInt(txtDni.getText().trim());           
+            Alumno alu = aluData.buscarAlumno(dni);
+            
+            if(alu != null){
+                txtID.setText(String.valueOf(alu.getIdAlumno()));
+                txtNombre.setText(alu.getNombre());
+                java.util.Date fecha = java.sql.Date.valueOf(alu.getFecNac());
+                jfecha.setDate(fecha);
+                checkBoxActivo.setState(alu.isActivo());
+            }else{
+                JOptionPane.showMessageDialog(this, "El DNI no se encontro en la base de datos");
+            }
+        }catch (NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "El DNI debe contener numeros unicamente");
+        }catch (Exception e){
+                JOptionPane.showMessageDialog(this, "Error al buscar: "+ e.getMessage());
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
@@ -300,7 +358,6 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private java.awt.Checkbox checkBoxActivo;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JDesktopPane jDesktopPane3;
     private javax.swing.JLabel jLabelActivo;
     private javax.swing.JLabel jLabelAlumno;
@@ -309,6 +366,7 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelID;
     private javax.swing.JLabel jLabelNombre1;
     private javax.swing.JPanel jPanel1;
+    private com.toedter.calendar.JDateChooser jfecha;
     private javax.swing.JTextField txtDni;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtNombre;

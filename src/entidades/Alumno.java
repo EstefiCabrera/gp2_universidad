@@ -24,7 +24,19 @@ public class Alumno implements Comparable<Alumno>{
         this.fecNac = fecNac;
         this.activo = activo;
     }
+    
+    public Alumno(int dni, String nombre, LocalDate fecNac, boolean activo) {
+        this.idAlumno=idAlumno;
+        this.dni = dni;
+        this.nombre = nombre;
+        this.fecNac = fecNac;
+        this.activo = activo;
+    }
 
+    public Alumno() {
+    }
+    
+    
     public int getIdAlumno() {
         return idAlumno;
     }

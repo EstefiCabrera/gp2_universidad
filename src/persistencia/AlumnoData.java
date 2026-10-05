@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class AlumnoData{
     private Connection con = null;
@@ -44,5 +45,55 @@ public class AlumnoData{
             System.out.println("No se puede insertar");    
         }
     }
+    
+    public Alumno buscarAlumno(int dni){
+      Alumno a= null;
+      String sql = "SELECT * FROM alumno WHERE dni= ?";
+      
+      PreparedStatement ps;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, dni);
+            ResultSet rs= ps.executeQuery();
+            while (rs.next()) {  
+                a=new Alumno();
+                a.setId(rs.getInt("idAlumno"));
+                a.setDni(rs.getInt("dni"));
+                a.setNombre(rs.getString("nombre"));
+                a.setFecNac(rs.getDate("fecNac").toLocalDate());
+                a.setActivo(rs.getBoolean("activo"));
+            }
+            ps.close(); 
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return a; 
+    } 
+    
+    
+    public void actualizarAlumno(Alumno a){
+        String query = "UPDATE alumno SET dni= ? WHERE idAlumno=?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, a.getDni());
+            ps.setInt(2, a.getIdAlumno());
+            //ps.executeUpdate();
+            int exito = ps.executeUpdate();
+            if(exito == 1){
+            System.out.println("DNI actualizado exitosamente");
+            }else{
+            System.out.println("No se encontró el alumno con ese ID");
+            }
+            ps.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    } 
+    
+  
 }
 
