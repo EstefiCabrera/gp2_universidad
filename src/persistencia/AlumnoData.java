@@ -94,6 +94,23 @@ public class AlumnoData{
       
     } 
     
+    public void eliminarAlumno(int dni){
+        String query = "DELETE FROM alumno WHERE dni = ?";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, dni);
+            int exito = ps.executeUpdate();
+            if(exito == 1) {
+                System.out.println("El alumno ha sido eliminado correctamente");
+            }else{
+                System.out.println("No se ha encontrado un alumno con dicho DNI");
+            }
+            ps.close();
+            
+        }catch(SQLException ex){
+            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
   
 }
-
