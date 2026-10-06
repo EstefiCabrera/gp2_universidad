@@ -287,25 +287,6 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
               JOptionPane.showMessageDialog(this, "Por favor, ingrese un DNI valido");
           }
     
-
-
-//boolean encontrado = false;// TODO add your handling code here:
-//
-//        Iterator<Alumno> it = alumnos.iterator();
-//        
-//        while (it.hasNext()) {
-//            Alumno alumno = it.next();
-//
-//            if (alumno.getIdAlumno() == Integer.parseInt(txtID.getText())) {
-//                it.remove();
-//                encontrado = true;
-//            }
-//        }
-//        if (encontrado) {
-//            JOptionPane.showMessageDialog(this, "El ID ha sido encontrado y ha sido eliminado correctamente");
-//        } else {
-//         JOptionPane.showMessageDialog(this, "No se ha encontrado el ID");
-//        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
