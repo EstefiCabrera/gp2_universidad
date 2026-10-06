@@ -279,23 +279,33 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        boolean encontrado = false;// TODO add your handling code here:
+          try{
+              int dni= Integer.parseInt(txtDni.getText());
+              aluData.eliminarAlumno(dni);
+              JOptionPane.showMessageDialog(this, "El alumno ha sido eliminado correctamente");
+          }catch(NumberFormatException ex){
+              JOptionPane.showMessageDialog(this, "Por favor, ingrese un DNI valido");
+          }
+    
 
-        Iterator<Alumno> it = alumnos.iterator();
-        
-        while (it.hasNext()) {
-            Alumno alumno = it.next();
 
-            if (alumno.getIdAlumno() == Integer.parseInt(txtID.getText())) {
-                it.remove();
-                encontrado = true;
-            }
-        }
-        if (encontrado) {
-            JOptionPane.showMessageDialog(this, "El ID ha sido encontrado y ha sido eliminado correctamente");
-        } else {
-         JOptionPane.showMessageDialog(this, "No se ha encontrado el ID");
-        }
+//boolean encontrado = false;// TODO add your handling code here:
+//
+//        Iterator<Alumno> it = alumnos.iterator();
+//        
+//        while (it.hasNext()) {
+//            Alumno alumno = it.next();
+//
+//            if (alumno.getIdAlumno() == Integer.parseInt(txtID.getText())) {
+//                it.remove();
+//                encontrado = true;
+//            }
+//        }
+//        if (encontrado) {
+//            JOptionPane.showMessageDialog(this, "El ID ha sido encontrado y ha sido eliminado correctamente");
+//        } else {
+//         JOptionPane.showMessageDialog(this, "No se ha encontrado el ID");
+//        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
