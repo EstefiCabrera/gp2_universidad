@@ -32,8 +32,7 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
         aluData = new AlumnoData(conexion);
         
         jfecha.getDateEditor().setEnabled(false);
-        btnEliminar.setEnabled(false);
-        btnActualizar.setEnabled(false);
+       
         
         
         
