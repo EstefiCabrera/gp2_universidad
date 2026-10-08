@@ -4,10 +4,18 @@
  */
 package persistencia;
 
+import java.sql.Connection;
+
 /**
  *
  * @author crn70
  */
 public class MateriaData {
+    
+    private Connection con = null;
+    
+    public MateriaData(miConexion conexion){
+        this.con = conexion.buscarConexion();
+    }
     
 }
