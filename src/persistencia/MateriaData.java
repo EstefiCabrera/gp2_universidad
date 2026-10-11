@@ -4,6 +4,7 @@
  */
 package persistencia;
 
+import entidades.Materia;
 import java.sql.Connection;
 
 /**
@@ -12,10 +13,60 @@ import java.sql.Connection;
  */
 public class MateriaData {
     
-    private Connection con = null;
+    private com.sun.jdi.connect.spi.Connection con = null;
     
     public MateriaData(miConexion conexion){
-        this.con = conexion.buscarConexion();
+        this.con = (com.sun.jdi.connect.spi.Connection) conexion.buscarConexion();
+        
     }
     
+    
+    
+public void guardarMateria(Materia m){
+        
+        
+        
+        }
+        
+public void actualizarMateria(){
+
+
+
+
+    
+    
+    
+    
+
+
 }
+public Materia buscarMateria(int id){
+
+
+
+    
+    
+    
+        return null;
+
+
+
+}
+
+
+
+public void eliminarMateria(int id){
+
+
+
+}
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    

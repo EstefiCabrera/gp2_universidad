@@ -110,6 +110,7 @@ public class AlumnoData{
         }
     }
     
-    public void alumnoActivo
+    public void alumnoActivo(){
   
+            }
 }
