@@ -4,17 +4,26 @@
  */
 package vistas;
 
+import entidades.Materia;
+import javax.swing.JOptionPane;
+import persistencia.MateriaData;
+import persistencia.miConexion;
+
 /**
  *
  * @author crn70
  */
 public class guiMateria extends javax.swing.JInternalFrame {
-
+        private MateriaData matData;
+        private miConexion conexion;
     /**
      * Creates new form guiMateria
      */
     public guiMateria() {
         initComponents();
+        conexion = new miConexion();
+        matData= new MateriaData(conexion);
+        
     }
 
     /**
@@ -36,7 +45,7 @@ public class guiMateria extends javax.swing.JInternalFrame {
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jcbEstado = new javax.swing.JCheckBox();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 153, 255));
@@ -45,6 +54,8 @@ public class guiMateria extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("ID Materia: ");
 
+        txtMateria.setEditable(false);
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Nombre:");
 
@@ -52,12 +63,15 @@ public class guiMateria extends javax.swing.JInternalFrame {
         jLabel4.setText("Estado:");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(this::btnActualizarActionPerformed);
 
         btnEliminar.setText("Eliminar");
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,7 +88,7 @@ public class guiMateria extends javax.swing.JInternalFrame {
                         .addGap(72, 72, 72)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(260, 260, 260)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -110,7 +124,7 @@ public class guiMateria extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jcbEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(56, 56, 56)
@@ -130,17 +144,62 @@ public class guiMateria extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+       try{
+           String nombre = txtNombre.getText().trim();
+            if(nombre.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Debe ingresar un nombre para la materia");
+                return;
+            }
+            boolean estado = jcbEstado.isSelected();
+            Materia nuevaMateria = new Materia(nombre, estado);
+            matData.guardarMateria(nuevaMateria);
+            JOptionPane.showMessageDialog(this, "Materia guardada");  
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al guardar: "+ex.getMessage());  
+        }
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        try{
+            String idTexto= txtMateria.getText().trim();
+            if(idTexto.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Debes buscar la materia que desea actualizar");
+                return;
+            }
+            int idMateria = Integer.parseInt(idTexto);
+            String nombre = txtNombre.getText().trim();
+            if(nombre.isEmpty()){
+                JOptionPane.showMessageDialog(this, "El nombre de la materia no puede estar vacio");
+                return;
+            }
+            boolean estado = jcbEstado.isSelected();
+               
+            Materia materiaActualizada = new Materia(idMateria, nombre, estado);
+            matData.actualizarMateria(materiaActualizada);
+                JOptionPane.showMessageDialog(this, "La materia fue actualizada correctamente"); 
+        }catch (Exception e){
+                JOptionPane.showMessageDialog(this, "Error al actualizar la materia: "+ e.getMessage());
+        }        
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JCheckBox jcbEstado;
     private javax.swing.JTextField txtMateria;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables

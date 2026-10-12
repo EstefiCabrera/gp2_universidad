@@ -6,41 +6,69 @@ package persistencia;
 
 import entidades.Materia;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
  * @author crn70
  */
-public class MateriaData {
+    public class MateriaData {
     
-    private com.sun.jdi.connect.spi.Connection con = null;
+    private Connection con = null;
     
     public MateriaData(miConexion conexion){
-        this.con = (com.sun.jdi.connect.spi.Connection) conexion.buscarConexion();
+        this.con = conexion.buscarConexion();
         
     }
     
-    
-    
-public void guardarMateria(Materia m){
+    public void guardarMateria(Materia m){
+        String sql = "INSERT INTO materia(nombre, estado) VALUES (?,?)";  
         
-        
-        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS); 
+            ps.setString(1,m.getNombre());
+            ps.setBoolean(2, m.isEstado());
+            ps.executeUpdate();     
+            
+            ResultSet rs = ps.getGeneratedKeys(); 
+            if(rs.next()){
+                m.setIdMateria(rs.getInt(1));
+            System.out.println("Materia guardada con exito. ID: "+m.getIdMateria());
+            }else
+                System.out.println("No se pudo guardar materia");
+            ps.close();
+            System.out.println("Guardado!");
+        } catch (SQLException ex) {
+            System.out.println("Error al acceder a la tabla de materia:"+ex.getMessage());    
         }
+    }
         
-public void actualizarMateria(){
+    public void actualizarMateria(Materia m){
+        String query = "UPDATE materia SET nombre= ?, estado =? WHERE idMateria=?;";
 
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, m.getNombre());
+            ps.setBoolean(2, m.isEstado());
+            ps.setInt(3, m.getIdMateria());
+            
+            int exito = ps.executeUpdate();
+            if(exito == 1){
+            System.out.println("Materia actualizado exitosamente");
+            }else{
+            System.out.println("No se encontró ninguna materia con ese ID");
+            }
+            ps.close();
+            
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar"+ex.getMessage());
+        }
+    }
 
-
-
-    
-    
-    
-    
-
-
-}
-public Materia buscarMateria(int id){
+    public Materia buscarMateria(int id){
 
 
 
