@@ -5,6 +5,8 @@
 package persistencia;
 
 import entidades.Materia;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -68,17 +70,33 @@ import java.sql.Statement;
         }
     }
 
-    public Materia buscarMateria(int id){
+    public Materia buscarMateria(int idMateria) throws SQLException{
 
 
+   Materia m = null;
 
-    
-    
-    
-        return null;
+    String sql = "SELECT * FROM Materia WHERE idMateria = ?";
 
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, idMateria);
 
+        ResultSet rs = ps.executeQuery();
 
+        if(rs.next()){
+            m = new Materia();
+
+            m.setIdMateria(rs.getInt("idMateria"));
+            m.setNombre(rs.getString("nombre"));
+            m.setEstado(rs.getBoolean("activo"));
+        }
+
+        ps.close();
+
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+    }
+ return m;
 }
 
 

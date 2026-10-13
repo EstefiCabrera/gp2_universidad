@@ -89,7 +89,7 @@
                                           <Component id="jLabelNombre1" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="checkBoxActivo" min="-2" max="-2" attributes="0"/>
                                           <Component id="txtNombre" alignment="0" min="-2" pref="163" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
@@ -98,7 +98,7 @@
                                               <Component id="btnBuscar" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Component id="txtID" min="-2" pref="163" max="-2" attributes="0"/>
-                                          <Component id="jfecha" min="-2" pref="266" max="-2" attributes="0"/>
+                                          <Component id="jfecha" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>

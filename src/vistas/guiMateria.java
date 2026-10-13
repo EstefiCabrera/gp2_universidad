@@ -5,6 +5,7 @@
 package vistas;
 
 import entidades.Materia;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import persistencia.MateriaData;
 import persistencia.miConexion;
@@ -46,6 +47,7 @@ public class guiMateria extends javax.swing.JInternalFrame {
         btnEliminar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jcbEstado = new javax.swing.JCheckBox();
+        btnBuscar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 153, 255));
@@ -72,6 +74,9 @@ public class guiMateria extends javax.swing.JInternalFrame {
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(this::btnSalirActionPerformed);
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,7 +111,9 @@ public class guiMateria extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBuscar)))))
                 .addContainerGap(83, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -116,7 +123,8 @@ public class guiMateria extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,9 +197,39 @@ public class guiMateria extends javax.swing.JInternalFrame {
         }        
     }//GEN-LAST:event_btnActualizarActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+            try {
+                // TODO add your handling code here:
+                
+                
+                if(txtMateria.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(this, "ingrese un id de materia");
+                    return;
+                }
+                
+                int id = Integer.parseInt(txtMateria.getText().trim());
+                
+                
+                Materia materia = matData.buscarMateria(id);
+                
+                if(materia != null){
+                    txtMateria.setText(String.valueOf(materia.getIdMateria()));
+                    txtNombre.setText(materia.getNombre());
+                    jcbEstado.setSelected(materia.isEstado());
+                    
+                }else{
+                    JOptionPane.showMessageDialog(this, "no se encontró la materia");
+                } 
+            } catch (SQLException ex) {
+                System.getLogger(guiMateria.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSalir;

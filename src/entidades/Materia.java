@@ -20,6 +20,11 @@ public class Materia {
         this.estado = estado;
     }
 
+    public Materia() {
+    }
+    
+    
+
     public Materia(String nombre, boolean estado) {
         this.nombre = nombre;
         this.estado = estado;
