@@ -56,7 +56,7 @@ public class guiMateria extends javax.swing.JInternalFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("ID Materia: ");
 
-        txtMateria.setEditable(false);
+        txtMateria.addActionListener(this::txtMateriaActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Nombre:");
@@ -71,6 +71,7 @@ public class guiMateria extends javax.swing.JInternalFrame {
         btnActualizar.addActionListener(this::btnActualizarActionPerformed);
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnSalir.setText("Salir");
         btnSalir.addActionListener(this::btnSalirActionPerformed);
@@ -225,6 +226,34 @@ public class guiMateria extends javax.swing.JInternalFrame {
             }
 
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMateriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMateriaActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+            try {
+                String idTexto = txtMateria.getText().trim();
+                
+                if(txtMateria.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(this, "ingrese un id de materia");
+                    return;
+                }
+                int idMateria = Integer.parseInt(idTexto);
+                int respuesta = JOptionPane.showConfirmDialog(this, "¿Está seguro que desea eliminar la materia?");
+                
+                if(respuesta == JOptionPane.YES_OPTION);
+                JOptionPane.showMessageDialog(this, "La materia ha sido eliminada exitosamente");
+                MateriaData matData= new MateriaData(conexion);
+                matData.eliminarMateria(idMateria);
+                
+                txtMateria.setText("");
+                txtNombre.setText("");
+                jcbEstado.setSelected(false);
+            }catch (NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Error. El id de materia debe ser un número valido");
+}
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -101,18 +101,26 @@ import java.sql.Statement;
 
 
 
-public void eliminarMateria(int id){
-
+public void eliminarMateria(int idMateria){
+        String query = "DELETE FROM materia WHERE idMateria = ?";
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, idMateria);
+            int exito = ps.executeUpdate();
+            if(exito == 1) {
+                System.out.println("La materia ha sido eliminada correctamente");
+            }else{
+                System.out.println("No se ha encontrado la materia con ese ID");
+            }
+            ps.close();
+            
+        }catch(SQLException ex){
+            System.out.println("Ah ocurrido un error");
+        }
+    }
 
 
 }
         
-        
-        
-        
-        
-        
-        
-        
-    }
-    
+
