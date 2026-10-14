@@ -176,6 +176,7 @@ public class guiMateria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        boolean encontrado = false;
         try{
             String idTexto= txtMateria.getText().trim();
             if(idTexto.isEmpty()){
@@ -191,8 +192,13 @@ public class guiMateria extends javax.swing.JInternalFrame {
             boolean estado = jcbEstado.isSelected();
                
             Materia materiaActualizada = new Materia(idMateria, nombre, estado);
-            matData.actualizarMateria(materiaActualizada);
-                JOptionPane.showMessageDialog(this, "La materia fue actualizada correctamente"); 
+            boolean resultado = matData.actualizarMateria(materiaActualizada);
+
+            if (resultado) {
+                JOptionPane.showMessageDialog(this, "La materia fue actualizada correctamente");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró ninguna materia con ese ID");
+            } 
         }catch (Exception e){
                 JOptionPane.showMessageDialog(this, "Error al actualizar la materia: "+ e.getMessage());
         }        

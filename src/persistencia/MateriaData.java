@@ -48,7 +48,7 @@ import java.sql.Statement;
         }
     }
         
-    public void actualizarMateria(Materia m){
+    public boolean actualizarMateria(Materia m){
         String query = "UPDATE materia SET nombre= ?, estado =? WHERE idMateria=?;";
 
         try {
@@ -58,15 +58,18 @@ import java.sql.Statement;
             ps.setInt(3, m.getIdMateria());
             
             int exito = ps.executeUpdate();
-            if(exito == 1){
-            System.out.println("Materia actualizado exitosamente");
-            }else{
-            System.out.println("No se encontró ninguna materia con ese ID");
-            }
+            
             ps.close();
+            
+            if(exito == 1){
+                return true;
+            }else{
+                return false;
+            }
             
         } catch (SQLException ex) {
             System.out.println("Error al actualizar"+ex.getMessage());
+            return false;
         }
     }
 
