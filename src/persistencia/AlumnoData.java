@@ -109,7 +109,4 @@ public class AlumnoData{
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void alumnoActivo
-  
-}
+}    
