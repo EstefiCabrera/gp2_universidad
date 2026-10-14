@@ -108,5 +108,10 @@ public class AlumnoData{
         }catch(SQLException ex){
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-}    
+    }   
+    
+    public void alumnoActivo(){
+  
+	}
+}
+

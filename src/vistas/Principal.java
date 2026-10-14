@@ -34,6 +34,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuAlumnosfrm = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +62,10 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1.setText("Formulario de Alumnos");
         jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
         jMenuAlumnosfrm.add(jMenuItem1);
+
+        jMenuItem3.setText("Formulario de Materias");
+        jMenuItem3.addActionListener(this::jMenuItem3ActionPerformed);
+        jMenuAlumnosfrm.add(jMenuItem3);
 
         jMenuBar1.add(jMenuAlumnosfrm);
 
@@ -125,6 +130,29 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuAlumnosfrmActionPerformed
 
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+
+
+
+
+ escritorio.removeAll();
+         escritorio.repaint();
+        
+         
+         guiMateria materias = new guiMateria();
+         escritorio.add(materias);
+        materias.setVisible(true);
+        escritorio.moveToFront(materias);
+
+
+
+
+
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -157,5 +185,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     // End of variables declaration//GEN-END:variables
 }

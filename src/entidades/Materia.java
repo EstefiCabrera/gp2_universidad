@@ -10,13 +10,26 @@ package entidades;
  */
 public class Materia {
     
-    private int idMateria;
+    private int idMateria=-1;
     private String nombre;
-
-    public Materia(int idMateria, String nombre) {
+    private boolean estado;
+    
+    public Materia(int idMateria, String nombre, boolean estado) {
         this.idMateria = idMateria;
         this.nombre = nombre;
+        this.estado = estado;
     }
+
+    public Materia() {
+    }
+    
+    
+
+    public Materia(String nombre, boolean estado) {
+        this.nombre = nombre;
+        this.estado = estado;
+    }
+    
 
     public int getIdMateria() {
         return idMateria;
@@ -33,5 +46,14 @@ public class Materia {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+    
     
 }
