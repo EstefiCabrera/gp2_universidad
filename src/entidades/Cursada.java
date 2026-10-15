@@ -4,7 +4,6 @@
  */
 package entidades;
 
-import java.time.LocalDate;
 
 /**
  *
@@ -13,25 +12,44 @@ import java.time.LocalDate;
 public class Cursada {
     
     private int idCursada = -1;
+    private Alumno alumno;
+    private Materia materia;
     private float nota;
     private float asistencia;
-    private LocalDate cursa;
+    private int cursa;
+    private int cuatrimestre;
 
-    public Cursada(float nota, float asistencia, LocalDate cursa) {
+    public Cursada(Alumno alumno, Materia materia, float nota, float asistencia, int cursa, int cuatrimestre) {
+        this.alumno = alumno;
+        this.materia = materia;
         this.nota = nota;
         this.asistencia = asistencia;
         this.cursa = cursa;
+        this.cuatrimestre = cuatrimestre;
     }
 
-    public Cursada() {
-    }
-    
     public int getIdCursada() {
         return idCursada;
     }
 
     public void setIdCursada(int idCursada) {
         this.idCursada = idCursada;
+    }
+
+    public Alumno getAlumno() {
+        return alumno;
+    }
+
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
+    }
+
+    public Materia getMateria() {
+        return materia;
+    }
+
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
 
     public float getNota() {
@@ -50,14 +68,21 @@ public class Cursada {
         this.asistencia = asistencia;
     }
 
-    public LocalDate getCursa() {
+    public int getCursa() {
         return cursa;
     }
 
-    public void setCursa(LocalDate cursa) {
+    public void setCursa(int cursa) {
         this.cursa = cursa;
     }
-    
-    
+
+    public int getCuatrimestre() {
+        return cuatrimestre;
+    }
+
+    public void setCuatrimestre(int cuatrimestre) {
+        this.cuatrimestre = cuatrimestre;
+    }
+
     
 }
