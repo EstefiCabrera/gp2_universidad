@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -122,6 +124,37 @@ public void eliminarMateria(int idMateria){
             System.out.println("Ah ocurrido un error");
         }
     }
+
+
+public List<Materia> listarMaterias() {
+
+    String sql = "SELECT idMateria, nombre, estado FROM materia WHERE estado = 1";
+
+    List<Materia> materias = new ArrayList<>();
+
+    try {
+        
+        PreparedStatement ps = con.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+
+            Materia m = new Materia();
+            m.setIdMateria(rs.getInt("idMateria"));
+           m.setNombre(rs.getString("nombre"));
+          m.setEstado(rs.getBoolean("estado"));
+
+        materias.add(m);
+  }
+   ps.close();
+    } catch (SQLException ex) {
+        System.out.println("Error al listar materias: " + ex.getMessage());
+    }
+
+    return materias;
+}
+
+
 
 
 }
