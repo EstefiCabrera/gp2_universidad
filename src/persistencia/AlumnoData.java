@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class AlumnoData{
     private Connection con = null;
@@ -86,32 +87,30 @@ public class AlumnoData{
             ps.close();
             
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
         }
       
     } 
     
     public void eliminarAlumno(int dni){
-        String query = "DELETE FROM alumno WHERE dni = ?";
+        String sql = "UPDATE alumno SET activo = 0 WHERE idAlumno = ?";
         
         try{
-            PreparedStatement ps = con.prepareStatement(query);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, dni);
             int exito = ps.executeUpdate();
             if(exito == 1) {
-                System.out.println("El alumno ha sido eliminado correctamente");
+                JOptionPane.showMessageDialog(null, "El alumno ha sido eliminado correctamente");
             }else{
-                System.out.println("No se ha encontrado un alumno con dicho DNI");
+                JOptionPane.showMessageDialog(null, "No se ha encontrado un alumno con dicho id");
             }
             ps.close();
             
         }catch(SQLException ex){
-            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
         }
     }   
     
-    public void alumnoActivo(){
-  
-	}
 }
+
 
