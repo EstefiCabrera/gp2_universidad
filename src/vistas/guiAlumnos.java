@@ -280,23 +280,24 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        boolean encontrado = false;// TODO add your handling code here:
-
-        Iterator<Alumno> it = alumnos.iterator();
+       try{
+           if (txtID.getText().trim().isEmpty()){
+               JOptionPane.showMessageDialog(this, "Debe buscar el alumno");
+               return;
+           }
+       int idAlumno= Integer.parseInt(txtID.getText().trim());
+       aluData.eliminarAlumno(idAlumno);
+       txtID.setText("");
+        txtNombre.setText("");
+        txtDni.setText("");
+        jfecha.setDate(null);
+        checkBoxActivo.setState(false);
         
-        while (it.hasNext()) {
-            Alumno alumno = it.next();
+        
+       }catch(NumberFormatException e){
+           JOptionPane.showMessageDialog(this, "El ID cargado no se encuentra");
+       }
 
-            if (alumno.getIdAlumno() == Integer.parseInt(txtID.getText())) {
-                it.remove();
-                encontrado = true;
-            }
-        }
-        if (encontrado) {
-            JOptionPane.showMessageDialog(this, "El ID ha sido encontrado y ha sido eliminado correctamente");
-        } else {
-         JOptionPane.showMessageDialog(this, "No se ha encontrado el ID");
-        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -347,6 +348,7 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
                 java.util.Date fecha = java.sql.Date.valueOf(alu.getFecNac());
                 jfecha.setDate(fecha);
                 checkBoxActivo.setState(alu.isActivo());
+                btnEliminar.setEnabled(true);
             }else{
                 JOptionPane.showMessageDialog(this, "El DNI no se encontro en la base de datos");
             }
