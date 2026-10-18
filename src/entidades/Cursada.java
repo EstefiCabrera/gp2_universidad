@@ -15,17 +15,27 @@ public class Cursada {
     private Alumno alumno;
     private Materia materia;
     private float nota;
-    private float asistencia;
+    private float asist;
     private int cursa;
-    private int cuatrimestre;
 
-    public Cursada(Alumno alumno, Materia materia, float nota, float asistencia, int cursa, int cuatrimestre) {
+    public Cursada(int idCursada, Alumno alumno, Materia materia, float nota, float asist, int cursa) {
+        this.idCursada= idCursada;
         this.alumno = alumno;
         this.materia = materia;
         this.nota = nota;
-        this.asistencia = asistencia;
+        this.asist = asist;
         this.cursa = cursa;
-        this.cuatrimestre = cuatrimestre;
+    }
+
+    public Cursada(Alumno alumno, Materia materia, float nota, float asist, int cursa) {
+        this.alumno = alumno;
+        this.materia = materia;
+        this.nota = nota;
+        this.asist = asist;
+        this.cursa = cursa;
+    }
+    
+    public Cursada() {
     }
 
     public int getIdCursada() {
@@ -60,12 +70,12 @@ public class Cursada {
         this.nota = nota;
     }
 
-    public float getAsistencia() {
-        return asistencia;
+    public float getAsist() {
+        return asist;
     }
 
-    public void setAsistencia(float asistencia) {
-        this.asistencia = asistencia;
+    public void setAsist(float asist) {
+        this.asist = asist;
     }
 
     public int getCursa() {
@@ -76,13 +86,8 @@ public class Cursada {
         this.cursa = cursa;
     }
 
-    public int getCuatrimestre() {
-        return cuatrimestre;
+    @Override
+    public String toString() {
+        return "Inscripción: "+alumno.getNombre()+ " en "+materia.getNombre();
     }
-
-    public void setCuatrimestre(int cuatrimestre) {
-        this.cuatrimestre = cuatrimestre;
-    }
-
-    
 }

@@ -115,7 +115,7 @@ public class AlumnoData{
     
      public List<Alumno> listarAlumnos() {
 
-    String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento FROM alumno WHERE estado = 1";
+    String sql = "SELECT idAlumno, dni, nombre, fecNac, activo FROM alumno WHERE activo = 1";
 
     ArrayList<Alumno> alumnos = new ArrayList<>();
 
@@ -132,7 +132,7 @@ public class AlumnoData{
             alumno.setId(rs.getInt("idAlumno"));
             alumno.setDni(rs.getInt("dni"));
             alumno.setNombre(rs.getString("nombre"));
-            alumno.setFecNac(rs.getDate("fechaNacimiento").toLocalDate());
+            alumno.setFecNac(rs.getDate("fecNac").toLocalDate());
             alumno.setActivo(true);
 
             alumnos.add(alumno);
