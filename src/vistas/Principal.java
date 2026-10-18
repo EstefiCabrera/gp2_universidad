@@ -36,6 +36,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        guiVistaListarInscripciones = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -44,11 +45,11 @@ public class Principal extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 774, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 475, Short.MAX_VALUE)
+            .addGap(0, 561, Short.MAX_VALUE)
         );
 
         jMenuAlumnosfrm.setText("Alumnos");
@@ -79,6 +80,10 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem4.setText("Formulario de Inscripción");
         jMenuItem4.addActionListener(this::jMenuItem4ActionPerformed);
         jMenu3.add(jMenuItem4);
+
+        guiVistaListarInscripciones.setText("Listado de Inscripciones");
+        guiVistaListarInscripciones.addActionListener(this::guiVistaListarInscripcionesActionPerformed);
+        jMenu3.add(guiVistaListarInscripciones);
 
         jMenuBar1.add(jMenu3);
 
@@ -192,6 +197,20 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1MouseClicked
 
+    private void guiVistaListarInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guiVistaListarInscripcionesActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+        
+          escritorio.removeAll();
+        escritorio.repaint();
+       guiListarInscripciones Listado = new guiListarInscripciones();
+        escritorio.add(Listado);
+        Listado.setVisible(true);
+        escritorio.moveToFront(Listado);
+    }//GEN-LAST:event_guiVistaListarInscripcionesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -219,6 +238,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
+    private javax.swing.JMenuItem guiVistaListarInscripciones;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
