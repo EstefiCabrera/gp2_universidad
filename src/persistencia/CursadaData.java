@@ -21,7 +21,7 @@ import java.util.List;
  * @author estef
  */
 public class CursadaData {
-    
+    private Connection con = null;
     private Connection con = null;
     private MateriaData md=new MateriaData();
     private AlumnoData ad=new AlumnoData();
