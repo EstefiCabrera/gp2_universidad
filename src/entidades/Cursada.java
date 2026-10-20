@@ -25,7 +25,7 @@ public class Cursada {
         this.alumno = alumno;
         this.materia = materia;
         this.nota = nota;
-        this.asist = asist;
+        this.asistencia = asistencia;
         this.cursa = cursa;
     }
     
@@ -72,12 +72,12 @@ public class Cursada {
         this.nota = nota;
     }
 
-    public float getAsist() {
-        return asist;
+    public float getAsistencia() {
+        return asistencia;
     }
 
-    public void setAsist(float asist) {
-        this.asist = asist;
+    public void setAsist(float asistencia) {
+        this.asistencia = asistencia;
     }
 
     public LocalDate getCursa() {
