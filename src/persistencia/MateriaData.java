@@ -25,6 +25,9 @@ import java.sql.Statement;
         this.con = conexion.buscarConexion();
         
     }
+
+    public MateriaData() {
+    }
     
     public void guardarMateria(Materia m){
         String sql = "INSERT INTO materia(nombre, estado) VALUES (?,?)";  

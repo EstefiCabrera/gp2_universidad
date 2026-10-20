@@ -20,6 +20,9 @@ public class AlumnoData{
     public AlumnoData(miConexion conexion){
         this.con = conexion.buscarConexion();
     }
+
+    public AlumnoData() {
+    }
     
     public void guardarAlumno(Alumno a){    
         String sql = "INSERT INTO alumno(dni, nombre, fecNac, activo) VALUES (?,?,?,?)";  

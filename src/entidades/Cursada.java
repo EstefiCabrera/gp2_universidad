@@ -4,6 +4,8 @@
  */
 package entidades;
 
+import java.time.LocalDate;
+
 
 /**
  *
@@ -11,21 +13,31 @@ package entidades;
  */
 public class Cursada {
     
-    private int idCursada = -1;
+    private int idCursada;
     private Alumno alumno;
     private Materia materia;
     private float nota;
     private float asistencia;
-    private int cursa;
-    private int cuatrimestre;
+    private LocalDate cursa;
 
-    public Cursada(Alumno alumno, Materia materia, float nota, float asistencia, int cursa, int cuatrimestre) {
+    public Cursada(int idCursada, Alumno alumno, Materia materia, float nota, float asistencia, LocalDate cursa) {
+        this.idCursada = idCursada;
         this.alumno = alumno;
         this.materia = materia;
         this.nota = nota;
         this.asistencia = asistencia;
         this.cursa = cursa;
-        this.cuatrimestre = cuatrimestre;
+    }
+    
+    public Cursada(Alumno alumno, Materia materia, float nota, float asistencia, LocalDate cursa) {
+        this.alumno = alumno;
+        this.materia = materia;
+        this.nota = nota;
+        this.asistencia = asistencia;
+        this.cursa = cursa;
+    }
+
+    public Cursada() {
     }
 
     public int getIdCursada() {
@@ -68,21 +80,20 @@ public class Cursada {
         this.asistencia = asistencia;
     }
 
-    public int getCursa() {
+    public LocalDate getCursa() {
         return cursa;
     }
 
-    public void setCursa(int cursa) {
+    public void setCursa(LocalDate cursa) {
         this.cursa = cursa;
     }
 
-    public int getCuatrimestre() {
-        return cuatrimestre;
+    @Override
+    public String toString() {
+        String insc=idCursada+" "+alumno.getIdAlumno()+", "+alumno.getDni()+", "+alumno.getNombre()+", "+alumno.isActivo()+", "+materia.getNombre();
+        return insc;
     }
 
-    public void setCuatrimestre(int cuatrimestre) {
-        this.cuatrimestre = cuatrimestre;
-    }
-
+    
     
 }
