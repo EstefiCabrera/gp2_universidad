@@ -150,7 +150,32 @@ public class AlumnoData{
     return alumnos;
 }
     
-    
+    public List <Alumno> listarAlumnosXmateria(String mat){     
+        String sql = "SELECT a.idAlumno, a.dni, a.nombre, a.fecNac, a.activo "
+                + "FROM alumno a "
+                + "INNER JOIN cursada c ON a.idAlumno = c.idAlumno " 
+                + "INNER JOIN materia m ON c.idMateria = m.idMateria "
+                + "WHERE m.nombre = ? AND a.activo=1";
+        ArrayList<Alumno> alumnos = new ArrayList<>();
+        
+        try{
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setString(1, mat);
+            ResultSet rs= ps.executeQuery();
+            while(rs.next()){
+            Alumno alumno = new Alumno();
+            alumno.setId(rs.getInt("idAlumno"));
+            alumno.setDni(rs.getInt("dni"));
+            alumno.setNombre(rs.getString("nombre"));
+	    alumno.setFecNac(rs.getDate("fecNac").toLocalDate());
+            alumno.setActivo(rs.getBoolean("activo"));     
+            alumnos.add(alumno);
+        }
+            ps.close();
+        } catch (SQLException e){
+                   JOptionPane.showMessageDialog(null, "Error al acceder a la tabla inscripción");            
+    }
+        return alumnos;
+    }
+
 }
-
-

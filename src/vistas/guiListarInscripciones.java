@@ -30,9 +30,9 @@ public class guiListarInscripciones extends javax.swing.JInternalFrame {
         initComponents();
         
          
-cargarCabecera();
-     cargarComboboxMaterias();
-   cargarTabla();
+    cargarCabecera();
+         cargarComboboxMaterias();
+       cargarTabla();
         
         
         
@@ -42,14 +42,15 @@ cargarCabecera();
     
     
     private void cargarTabla() {
-      // no se si funciona porque el guiInscripciones no esta listo aun.
+      if (jcbInscripciones.getSelectedItem()==null){
+          return;
+      }
+      String materiaSelec = jcbInscripciones.getSelectedItem().toString();
+      modelo.setRowCount(0);
       
-    miConexion conexion = new miConexion();
-    AlumnoData ad = new AlumnoData(conexion);
-
-    List<Alumno> alumnos = ad.listarAlumnos();
-
-    modelo.setRowCount(0);
+      miConexion conexion = new miConexion();
+      AlumnoData ad = new AlumnoData(conexion);
+      List<Alumno> alumnos = ad.listarAlumnosXmateria(materiaSelec);
 
     for (Alumno alu : alumnos) {
         modelo.addRow(new Object[]{
@@ -78,15 +79,7 @@ cargarCabecera();
     jcbInscripciones.setModel(modeloCombo);
     jcbInscripciones.setSelectedIndex(0);
 }
-    
-    
-   
-     
 
-  
-     
-   
-     
      
       private void cargarCabecera(){
      
@@ -111,7 +104,6 @@ cargarCabecera();
         jLabel1 = new javax.swing.JLabel();
         jcbInscripciones = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         jtbAlumnos.setModel(new javax.swing.table.DefaultTableModel(
@@ -128,16 +120,15 @@ cargarCabecera();
         jScrollPane1.setViewportView(jtbAlumnos);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Listar Inscripciones de Alumnos");
+        jLabel1.setText("Listado de Alumnos por Materia");
 
-        jcbInscripciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbInscripciones.addActionListener(this::jcbInscripcionesActionPerformed);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel2.setText("Inscripcion de un alumno:");
-
-        jButton1.setText("Actualizar");
+        jLabel2.setText("Seleccione una materia");
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,10 +148,7 @@ cargarCabecera();
                         .addGap(85, 85, 85)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(126, 126, 126)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(119, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -175,18 +163,23 @@ cargarCabecera();
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jcbInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbInscripcionesActionPerformed
+        cargarTabla();
+    }//GEN-LAST:event_jcbInscripcionesActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
