@@ -4,8 +4,6 @@
  */
 package entidades;
 
-import java.time.LocalDate;
-
 
 /**
  *
@@ -13,30 +11,30 @@ import java.time.LocalDate;
  */
 public class Cursada {
     
-    private int idCursada;
+    private int idCursada = -1;
     private Alumno alumno;
     private Materia materia;
     private float nota;
-    private float asistencia;
-    private LocalDate cursa;
+    private float asist;
+    private int cursa;
 
-    public Cursada(int idCursada, Alumno alumno, Materia materia, float nota, float asistencia, LocalDate cursa) {
-        this.idCursada = idCursada;
+    public Cursada(int idCursada, Alumno alumno, Materia materia, float nota, float asist, int cursa) {
+        this.idCursada= idCursada;
         this.alumno = alumno;
         this.materia = materia;
         this.nota = nota;
-        this.asistencia = asistencia;
+        this.asist = asist;
+        this.cursa = cursa;
+    }
+
+    public Cursada(Alumno alumno, Materia materia, float nota, float asist, int cursa) {
+        this.alumno = alumno;
+        this.materia = materia;
+        this.nota = nota;
+        this.asist = asist;
         this.cursa = cursa;
     }
     
-    public Cursada(Alumno alumno, Materia materia, float nota, float asistencia, LocalDate cursa) {
-        this.alumno = alumno;
-        this.materia = materia;
-        this.nota = nota;
-        this.asistencia = asistencia;
-        this.cursa = cursa;
-    }
-
     public Cursada() {
     }
 
@@ -72,26 +70,24 @@ public class Cursada {
         this.nota = nota;
     }
 
-    public float getAsistencia() {
-        return asistencia;
+    public float getAsist() {
+        return asist;
     }
 
-    public void setAsist(float asistencia) {
-        this.asistencia = asistencia;
+    public void setAsist(float asist) {
+        this.asist = asist;
     }
 
-    public LocalDate getCursa() {
+    public int getCursa() {
         return cursa;
     }
 
-    public void setCursa(LocalDate cursa) {
+    public void setCursa(int cursa) {
         this.cursa = cursa;
     }
 
     @Override
     public String toString() {
-        String insc=idCursada+" "+alumno.getIdAlumno()+", "+alumno.getDni()+", "+alumno.getNombre()+", "+alumno.isActivo()+", "+materia.getNombre();
-        return insc;
+        return "Inscripción: "+alumno.getNombre()+ " en "+materia.getNombre();
     }
-
 }
