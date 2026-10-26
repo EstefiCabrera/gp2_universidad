@@ -123,62 +123,32 @@ public class Principal extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         
-        
-     
-          escritorio.removeAll();
-         escritorio.repaint();
-        
-         
-         guiAlumnos alumnos = new guiAlumnos();
-         escritorio.add(alumnos);
+        escritorio.removeAll();
+        escritorio.repaint();
+
+        guiAlumnos alumnos = new guiAlumnos();
+        escritorio.add(alumnos);
         alumnos.setVisible(true);
         escritorio.moveToFront(alumnos);
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+           
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuAlumnosfrmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAlumnosfrmActionPerformed
         // TODO add your handling code here:
-        
-        
-       
-        
-        
-        
-        
+  
         
     }//GEN-LAST:event_jMenuAlumnosfrmActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
 
- escritorio.removeAll();
-         escritorio.repaint();
-        
+        escritorio.removeAll();
+        escritorio.repaint();  
          
-         guiMateria materias = new guiMateria();
-         escritorio.add(materias);
+        guiMateria materias = new guiMateria();
+        escritorio.add(materias);
         materias.setVisible(true);
         escritorio.moveToFront(materias);
 
-
-
-
-
-
-
-        // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -203,36 +173,23 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1MouseClicked
 
     private void guiVistaListarInscripcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guiVistaListarInscripcionesActionPerformed
-        // TODO add your handling code here:
-        
-        
-        
-        
-          escritorio.removeAll();
+
+        escritorio.removeAll();
         escritorio.repaint();
-       guiListarInscripciones Listado = new guiListarInscripciones();
+        guiListarInscripciones Listado = new guiListarInscripciones();
         escritorio.add(Listado);
         Listado.setVisible(true);
         escritorio.moveToFront(Listado);
     }//GEN-LAST:event_guiVistaListarInscripcionesActionPerformed
 
     private void jmenuCargarnotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuCargarnotasActionPerformed
-        // TODO add your handling code here:
-        
-        
-        
+
         escritorio.removeAll();
         escritorio.repaint();
-       guiCargarnotas notas = new guiCargarnotas();
+        guiCargarnotas notas = new guiCargarnotas();
         escritorio.add(notas);
         notas.setVisible(true);
-        escritorio.moveToFront(notas);
-        
-        
-        
-        
-        
-        
+        escritorio.moveToFront(notas);   
     }//GEN-LAST:event_jmenuCargarnotasActionPerformed
 
     /**

@@ -4,19 +4,62 @@
  */
 package vistas;
 
+import entidades.Alumno;
+import entidades.Cursada;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import persistencia.AlumnoData;
+import persistencia.CursadaData;
+import persistencia.miConexion;
+
+
 /**
  *
  * @author crn70
  */
 public class guiCargarnotas extends javax.swing.JInternalFrame {
-
+        private DefaultTableModel modelo= new DefaultTableModel();
+        private AlumnoData aluData = new AlumnoData();
+        private CursadaData curData;
+        
     /**
      * Creates new form guiCargarnotas
      */
     public guiCargarnotas() {
         initComponents();
+
+        miConexion conexion = new miConexion();
+        aluData = new AlumnoData(conexion);
+        curData = new CursadaData(conexion);
+        cargarAlumnos();
+        cargarCabecera();
+        
     }
 
+        
+    private void cargarAlumnos() {
+
+        List<Alumno> alumnos = aluData.listarAlumnos();
+
+        for (Alumno alu : alumnos) {
+        jcbAlumnos.addItem(alu);
+          
+    }
+}
+     private void cargarCabecera(){
+            modelo.addColumn("Código");
+            modelo.addColumn("Nombre");
+            modelo.addColumn("Nota");
+            jtNotas.setModel(modelo);
+     }
+     
+     private void borrarFilas(){
+         int filas = modelo.getRowCount();
+            for (int i = filas -1;i>=0; i--){
+                modelo.removeRow(i);
+     }
+     }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,9 +71,9 @@ public class guiCargarnotas extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jcbAlumnos = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtNotas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -39,9 +82,9 @@ public class guiCargarnotas extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Seleccione un alumno: ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbAlumnos.addActionListener(this::jcbAlumnosActionPerformed);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -52,11 +95,13 @@ public class guiCargarnotas extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtNotas);
 
         jButton1.setText("Guardar");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,7 +122,7 @@ public class guiCargarnotas extends javax.swing.JInternalFrame {
                         .addGap(53, 53, 53)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jcbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -90,7 +135,7 @@ public class guiCargarnotas extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1))
+                    .addComponent(jcbAlumnos))
                 .addGap(15, 15, 15)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -103,14 +148,69 @@ public class guiCargarnotas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jcbAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbAlumnosActionPerformed
+        borrarFilas();
+        Alumno selec = (Alumno) jcbAlumnos.getSelectedItem();
+        if (selec != null){
+            List<Cursada> lista = curData.obtenerNotasPorAlumno(selec.getIdAlumno());
+            
+            for(Cursada c : lista){
+                modelo.addRow(new Object[]{
+                c.getMateria().getIdMateria(), c.getMateria().getNombre(), c.getNota()
+                });
+            }
+        }
+    }//GEN-LAST:event_jcbAlumnosActionPerformed
+
+    
+    
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Alumno selecc = (Alumno) jcbAlumnos.getSelectedItem();
+        if(selecc == null){
+             JOptionPane.showMessageDialog(this, "Debe seleccionar un alumno");
+            return;
+        }
+        int filas = modelo.getRowCount();
+        if (filas == 0){
+            JOptionPane.showMessageDialog(this, "El alumno no tiene materias para calificar");
+            return;
+        }
+        try{
+            for (int i = 0; i < filas; i++) {
+                int idMateria=(int) modelo.getValueAt(i, 0);
+                Object celdaNota = modelo.getValueAt(i, 2);
+                double notaActual =0;
+                
+                if(celdaNota instanceof Number){
+                    notaActual = ((Number)celdaNota).doubleValue();
+                }else{
+                      notaActual = Double.parseDouble(celdaNota.toString());
+                }
+                if(notaActual <0 || notaActual >10){
+                    JOptionPane.showMessageDialog(this, "La nota debe ser entre 0 y 10.");
+                    return;
+                }
+                curData.actualizarNota(selecc.getIdAlumno(), idMateria, notaActual);
+            }
+                    JOptionPane.showMessageDialog(this, "Notas guardadas exitosamente");
+        }catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Error, ingresar números válidos.");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JComboBox<Alumno> jcbAlumnos;
+    private javax.swing.JTable jtNotas;
     // End of variables declaration//GEN-END:variables
 }

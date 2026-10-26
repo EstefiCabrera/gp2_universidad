@@ -79,7 +79,7 @@ public class Alumno implements Comparable<Alumno>{
 
     @Override
     public String toString() {
-        return idAlumno + "-" + nombre;
+        return idAlumno + "-"+nombre +"-" +fecNac+"-"+activo;
     }
     
     @Override

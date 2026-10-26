@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,11 +46,11 @@ import java.util.List;
                 m.setIdMateria(rs.getInt(1));
             System.out.println("Materia guardada con exito. ID: "+m.getIdMateria());
             }else
-                System.out.println("No se pudo guardar materia");
+                 JOptionPane.showMessageDialog(null, "No se pudo guardar materia");
             ps.close();
-            System.out.println("Guardado!");
+                 JOptionPane.showMessageDialog(null, "Guardado!");
         } catch (SQLException ex) {
-            System.out.println("Error al acceder a la tabla de materia:"+ex.getMessage());    
+                 JOptionPane.showMessageDialog(null, "Error al acceder a la tabla de materia:"+ex.getMessage());    
         }
     }
         
@@ -63,9 +64,7 @@ import java.util.List;
             ps.setInt(3, m.getIdMateria());
             
             int exito = ps.executeUpdate();
-            
-            ps.close();
-            
+            ps.close();  
             if(exito == 1){
                 return true;
             }else{
@@ -73,39 +72,33 @@ import java.util.List;
             }
             
         } catch (SQLException ex) {
-            System.out.println("Error al actualizar"+ex.getMessage());
+             JOptionPane.showMessageDialog(null, "Error al actualizar"+ex.getMessage());
             return false;
         }
     }
 
     public Materia buscarMateria(int idMateria) throws SQLException{
 
+        Materia m = null;
+        String sql = "SELECT * FROM Materia WHERE idMateria = ?";
 
-   Materia m = null;
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idMateria);
+            ResultSet rs = ps.executeQuery();
 
-    String sql = "SELECT * FROM Materia WHERE idMateria = ?";
-
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, idMateria);
-
-        ResultSet rs = ps.executeQuery();
-
-        if(rs.next()){
-            m = new Materia();
-
-            m.setIdMateria(rs.getInt("idMateria"));
-            m.setNombre(rs.getString("nombre"));
-            m.setEstado(rs.getBoolean("activo"));
-        }
-
-        ps.close();
-
-    } catch (SQLException ex) {
-        System.out.println("Error: " + ex.getMessage());
-    }
- return m;
-}
+            if(rs.next()){
+                 m = new Materia();
+                 m.setIdMateria(rs.getInt("idMateria"));
+                 m.setNombre(rs.getString("nombre"));
+                 m.setEstado(rs.getBoolean("activo"));
+            }
+             ps.close();
+         } catch (SQLException ex) {
+              JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+         }
+      return m;
+     }
 
 
 
@@ -117,14 +110,14 @@ public void eliminarMateria(int idMateria){
             ps.setInt(1, idMateria);
             int exito = ps.executeUpdate();
             if(exito == 1) {
-                System.out.println("La materia ha sido eliminada correctamente");
+                 JOptionPane.showMessageDialog(null, "La materia ha sido eliminada correctamente");
             }else{
-                System.out.println("No se ha encontrado la materia con ese ID");
+                 JOptionPane.showMessageDialog(null, "No se ha encontrado la materia con ese ID");
             }
             ps.close();
             
         }catch(SQLException ex){
-            System.out.println("Ah ocurrido un error");
+             JOptionPane.showMessageDialog(null, "Ah ocurrido un error");
         }
     }
 
@@ -132,34 +125,24 @@ public void eliminarMateria(int idMateria){
 public List<Materia> listarMaterias() {
 
     String sql = "SELECT idMateria, nombre, estado FROM materia WHERE estado = 1";
-
     List<Materia> materias = new ArrayList<>();
-
-    try {
-        
+    try {     
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()) {
-
-            Materia m = new Materia();
-            m.setIdMateria(rs.getInt("idMateria"));
+           Materia m = new Materia();
+           m.setIdMateria(rs.getInt("idMateria"));
            m.setNombre(rs.getString("nombre"));
-          m.setEstado(rs.getBoolean("estado"));
-
-        materias.add(m);
-  }
-   ps.close();
-    } catch (SQLException ex) {
-        System.out.println("Error al listar materias: " + ex.getMessage());
+           m.setEstado(rs.getBoolean("estado"));
+           materias.add(m);
+        }
+        ps.close();
+    }catch (SQLException ex) {
+         JOptionPane.showMessageDialog(null, "Error al listar materias: " + ex.getMessage());
     }
-
     return materias;
 }
-
-
-
-
 }
         
 

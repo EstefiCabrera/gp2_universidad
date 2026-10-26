@@ -28,19 +28,12 @@ public class guiListarInscripciones extends javax.swing.JInternalFrame {
      */
     public guiListarInscripciones() {
         initComponents();
-        
-         
-    cargarCabecera();
-         cargarComboboxMaterias();
-       cargarTabla();
-        
-        
-        
+        cargarCabecera();
+        cargarComboboxMaterias();
+        cargarTabla();
     }
 
-    
-    
-    
+
     private void cargarTabla() {
       if (jcbInscripciones.getSelectedItem()==null){
           return;
@@ -66,33 +59,23 @@ public class guiListarInscripciones extends javax.swing.JInternalFrame {
     DefaultComboBoxModel<String> modeloCombo = new DefaultComboBoxModel<>();
     miConexion conexion = new miConexion();
     MateriaData materia = new MateriaData(conexion);
-    
-    
-    
+
     List<Materia> materias = materia.listarMaterias();
     for (Materia m : materias) {
-        modeloCombo.addElement(m.getNombre());
-        
-        
+        modeloCombo.addElement(m.getNombre());  
     }
-    
     jcbInscripciones.setModel(modeloCombo);
     jcbInscripciones.setSelectedIndex(0);
 }
 
      
-      private void cargarCabecera(){
-     
+  private void cargarCabecera(){   
      modelo = new DefaultTableModel();
      modelo.addColumn("ID");
      modelo.addColumn("DNI");
      modelo.addColumn("Nombre");
 
      jtbAlumnos.setModel(modelo);
-     
-     
-     
-     
      }
      
     @SuppressWarnings("unchecked")

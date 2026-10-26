@@ -34,10 +34,7 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
         jfecha.getDateEditor().setEnabled(false);
         btnEliminar.setEnabled(false);
         btnActualizar.setEnabled(false);
-        
-        
-        
-        
+   
     }
 
     /**
@@ -269,7 +266,6 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
             Alumno alumno = new Alumno(dni, nombre, fecNac, activo);
             
             aluData.guardarAlumno(alumno);
-            //alumnos.add(alumno);
             
             JOptionPane.showMessageDialog(rootPane, "El alumno se ha cargado correctamente");   
         }catch(NumberFormatException e) {
@@ -285,19 +281,16 @@ public class guiAlumnos extends javax.swing.JInternalFrame {
                JOptionPane.showMessageDialog(this, "Debe buscar el alumno");
                return;
            }
-       int idAlumno= Integer.parseInt(txtID.getText().trim());
-       aluData.eliminarAlumno(idAlumno);
-       txtID.setText("");
-        txtNombre.setText("");
-        txtDni.setText("");
-        jfecha.setDate(null);
-        checkBoxActivo.setState(false);
-        
-        
+            int idAlumno= Integer.parseInt(txtID.getText().trim());
+            aluData.eliminarAlumno(idAlumno);
+            txtID.setText("");
+            txtNombre.setText("");
+            txtDni.setText("");
+            jfecha.setDate(null);
+            checkBoxActivo.setState(false); 
        }catch(NumberFormatException e){
            JOptionPane.showMessageDialog(this, "El ID cargado no se encuentra");
        }
-
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed

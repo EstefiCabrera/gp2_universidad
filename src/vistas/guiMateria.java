@@ -206,19 +206,13 @@ public class guiMateria extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
             try {
-                // TODO add your handling code here:
-                
-                
                 if(txtMateria.getText().isEmpty()){
                     JOptionPane.showMessageDialog(this, "ingrese un id de materia");
                     return;
                 }
-                
                 int id = Integer.parseInt(txtMateria.getText().trim());
                 
-                
                 Materia materia = matData.buscarMateria(id);
-                
                 if(materia != null){
                     txtMateria.setText(String.valueOf(materia.getIdMateria()));
                     txtNombre.setText(materia.getNombre());
@@ -228,7 +222,7 @@ public class guiMateria extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(this, "no se encontró la materia");
                 } 
             } catch (SQLException ex) {
-                System.getLogger(guiMateria.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    JOptionPane.showMessageDialog(this, "Error al buscar la materia"+ex.getMessage());
             }
 
     }//GEN-LAST:event_btnBuscarActionPerformed

@@ -38,14 +38,14 @@ public class AlumnoData{
             ps.executeUpdate();     
             
             ResultSet rs = ps.getGeneratedKeys(); 
-            if(rs.next())
+            if(rs.next()){
                 a.setId(rs.getInt(1));
-            else
-                System.out.println("No se pudo tener ID");
-            ps.close();
-            System.out.println("Guardado!");
+            }else{
+                 JOptionPane.showMessageDialog(null, "No se pudo tener ID");
+            }ps.close();
+                 JOptionPane.showMessageDialog(null, "Guardado!");
         } catch (SQLException ex) {
-            System.out.println("No se puede insertar");    
+                JOptionPane.showMessageDialog(null, "No se puede insertar");    
         }
     }
     
@@ -69,7 +69,7 @@ public class AlumnoData{
             ps.close(); 
             
         } catch (SQLException ex) {
-            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+             JOptionPane.showMessageDialog(null, "No se encontró el alumno");
         }
         return a; 
     } 
@@ -85,14 +85,14 @@ public class AlumnoData{
             //ps.executeUpdate();
             int exito = ps.executeUpdate();
             if(exito == 1){
-            System.out.println("DNI actualizado exitosamente");
+             JOptionPane.showMessageDialog(null, "DNI actualizado exitosamente");
             }else{
-            System.out.println("No se encontró el alumno con ese ID");
+             JOptionPane.showMessageDialog(null, "No se encontró el alumno con ese ID");
             }
             ps.close();
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno");
+             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla alumno"+ ex.getMessage());
         }
       
     } 
@@ -144,7 +144,7 @@ public class AlumnoData{
         ps.close();
 
     } catch (SQLException ex) {
-        System.out.println("Error al listar alumnos: " + ex.getMessage());
+         JOptionPane.showMessageDialog(null, "Error al listar alumnos: " + ex.getMessage());
     }
 
     return alumnos;
